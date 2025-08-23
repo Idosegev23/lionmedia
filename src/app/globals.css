@@ -1,26 +1,650 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&family=Poppins:wght@400;500;600;700&display=swap');
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --lm-lightBlue: #A7C8F2;
+  --lm-brandBlue: #0597F2;
+  --lm-inkDark: #022601;
+  --lm-green: #618C03;
+  --lm-lime: #97BF04;
+  --lm-bg: #F2F2F0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Ensure all containers respect viewport width */
+.container,
+section,
+div {
+  max-width: 100%;
+}
+
+/* Mobile-first responsive containers */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Prevent any element from causing horizontal scroll */
+  * {
+    min-width: 0;
+  }
+  
+  /* Grid and flex containers should wrap on mobile */
+  .grid {
+    overflow: hidden;
+  }
+  
+  .flex {
+    flex-wrap: wrap;
+  }
+  
+  /* Responsive text sizes for mobile */
+  h1 {
+    font-size: 2rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  h2 {
+    font-size: 1.75rem !important;
+    line-height: 1.3 !important;
+  }
+  
+  /* Ensure buttons don't overflow on mobile */
+  .asymmetric-button-primary,
+  .asymmetric-button-secondary {
+    min-width: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* Mobile header optimizations */
+  header {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Mobile navigation improvements */
+  .mobile-nav-item {
+    transform: translateX(0);
+    transition: all 0.2s ease;
+  }
+  
+  .mobile-nav-item:hover {
+    transform: translateX(-4px);
   }
 }
 
+html {
+  scroll-behavior: smooth;
+  direction: rtl;
+  lang: he;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Heebo', sans-serif;
+  background-color: var(--lm-bg);
+  color: var(--lm-inkDark);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  max-width: 100vw; /* Ensure body doesn't exceed viewport width */
+}
+
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.ltr {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Custom shadows for better depth */
+.shadow-3xl {
+  box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Border width 3 */
+.border-3 {
+  border-width: 3px;
+}
+
+/* Neumorphism Styles */
+.neumorphic-logo {
+  box-shadow: 
+    20px 20px 40px rgba(0, 0, 0, 0.1),
+    -20px -20px 40px rgba(255, 255, 255, 0.8),
+    inset 2px 2px 4px rgba(0, 0, 0, 0.05),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.5);
+}
+
+.neumorphic-circle {
+  box-shadow: 
+    25px 25px 50px rgba(0, 0, 0, 0.15),
+    -25px -25px 50px rgba(255, 255, 255, 0.9),
+    inset 5px 5px 10px rgba(0, 0, 0, 0.05),
+    inset -5px -5px 10px rgba(255, 255, 255, 0.6);
+}
+
+.neumorphic-inner {
+  box-shadow: 
+    inset 10px 10px 20px rgba(0, 0, 0, 0.1),
+    inset -10px -10px 20px rgba(255, 255, 255, 0.8);
+}
+
+.neumorphic-shape {
+  box-shadow: 
+    8px 8px 16px rgba(0, 0, 0, 0.1),
+    -8px -8px 16px rgba(255, 255, 255, 0.8);
+}
+
+.neumorphic-button-primary {
+  background: linear-gradient(145deg, #0597F2, #0475CC);
+  box-shadow: 
+    12px 12px 24px rgba(0, 0, 0, 0.2),
+    -12px -12px 24px rgba(255, 255, 255, 0.1),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.2),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.neumorphic-button-primary:hover {
+  box-shadow: 
+    15px 15px 30px rgba(0, 0, 0, 0.25),
+    -15px -15px 30px rgba(255, 255, 255, 0.1),
+    inset 3px 3px 6px rgba(255, 255, 255, 0.25),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.neumorphic-button-secondary {
+  background: linear-gradient(145deg, #F2F2F0, #E5E5E3);
+  box-shadow: 
+    12px 12px 24px rgba(0, 0, 0, 0.1),
+    -12px -12px 24px rgba(255, 255, 255, 0.9),
+    inset 2px 2px 4px rgba(0, 0, 0, 0.05),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+  border: 2px solid #0597F2;
+}
+
+.neumorphic-button-secondary:hover {
+  background: linear-gradient(145deg, #0597F2, #0475CC);
+  color: white;
+  box-shadow: 
+    15px 15px 30px rgba(0, 0, 0, 0.2),
+    -15px -15px 30px rgba(255, 255, 255, 0.1),
+    inset 3px 3px 6px rgba(255, 255, 255, 0.2),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Asymmetric Buttons */
+.asymmetric-button-primary {
+  background: linear-gradient(145deg, #0597F2, #0475CC);
+  border-radius: 0 2rem 0 2rem;
+  box-shadow: 
+    12px 12px 24px rgba(0, 0, 0, 0.2),
+    -12px -12px 24px rgba(255, 255, 255, 0.1),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.2),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.asymmetric-button-primary:hover {
+  background: linear-gradient(145deg, #0475CC, #0597F2);
+  box-shadow: 
+    15px 15px 30px rgba(0, 0, 0, 0.25),
+    -15px -15px 30px rgba(255, 255, 255, 0.1),
+    inset 3px 3px 6px rgba(255, 255, 255, 0.25),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.asymmetric-button-secondary {
+  background: linear-gradient(145deg, #F2F2F0, #E5E5E3);
+  border-radius: 2rem 0 2rem 0;
+  border: 2px solid #0597F2;
+  box-shadow: 
+    12px 12px 24px rgba(0, 0, 0, 0.1),
+    -12px -12px 24px rgba(255, 255, 255, 0.9),
+    inset 2px 2px 4px rgba(0, 0, 0, 0.05),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.asymmetric-button-secondary:hover {
+  background: linear-gradient(145deg, #0597F2, #0475CC);
+  color: white;
+  box-shadow: 
+    15px 15px 30px rgba(0, 0, 0, 0.2),
+    -15px -15px 30px rgba(255, 255, 255, 0.1),
+    inset 3px 3px 6px rgba(255, 255, 255, 0.2),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Geometric Shapes */
+.geometric-shape {
+  border-radius: 8px;
+}
+
+.geometric-shape.triangle {
+  background: transparent !important;
+  width: 0 !important;
+  height: 0 !important;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 26px solid;
+}
+
+.geometric-shape.circle {
+  border-radius: 50%;
+}
+
+.geometric-shape.hexagon {
+  clip-path: polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%);
+}
+
+.geometric-shape.diamond {
+  transform: rotate(45deg);
+}
+
+/* Geometric Element Hover Effects */
+.geometric-element {
+  transition: all 0.3s ease;
+}
+
+.geometric-element:hover {
+  transform: scale(1.1) rotate(180deg);
+}
+/* Notched vertical loop */
+/* Full-height loop rail */
+.loop-rail, .loop-rail-left { overflow: hidden; }
+.loop-rail::before,
+.loop-rail::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 64px;
+  pointer-events: none;
+  z-index: 2;
+}
+.loop-rail::before { top: 0; background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0)); }
+.loop-rail::after { bottom: 0; background: linear-gradient(to top, rgba(255,255,255,0.95), rgba(255,255,255,0)); }
+
+.loop-track {
+  position: absolute;
+  inset: 0.75rem;
+  overflow: hidden;
+}
+
+.loop-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  animation: lm-loop-vertical 12s linear infinite;
+}
+
+.loop-track:hover .loop-group {
+  animation-play-state: running;
+}
+
+@keyframes lm-loop-vertical {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+.dir-down { animation-name: lm-loop-vertical-rev; }
+@keyframes lm-loop-vertical-rev {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
+}
+
+.loop-item {
+  width: 100%;
+  height: 72px;
+  border: 2px solid rgba(5, 151, 242, 0.15);
+  box-shadow:
+    4px 4px 12px rgba(0,0,0,0.06),
+    -4px -4px 12px rgba(255,255,255,0.7),
+    inset 1px 1px 2px rgba(255,255,255,0.35),
+    inset -1px -1px 2px rgba(0,0,0,0.05);
+}
+
+@media (min-width: 640px) {
+  .loop-item { height: 88px; }
+}
+
+@media (min-width: 1024px) {
+  .loop-item { height: 110px; }
+}
+
+/* Pill variants (asymmetric corners) */
+.pill-a { border-radius: 0 1.25rem 0 1.25rem; }
+.pill-b { border-radius: 1.25rem 0 1.25rem 0; }
+.pill-c { border-radius: 1.5rem 0 0 1.5rem; }
+.pill-d { border-radius: 0 1.5rem 1.5rem 0; }
+
+/* Additional vertical bar variants (keep motif, add variety) */
+.bar-rounded-tl { border-radius: 1.25rem 0 0 0; }
+.bar-rounded-tr { border-radius: 0 1.25rem 0 0; }
+.bar-rounded-bl { border-radius: 0 0 0 1.25rem; }
+.bar-rounded-br { border-radius: 0 0 1.25rem 0; }
+.bar-rounded-top { border-radius: 1.25rem 1.25rem 0 0; }
+.bar-rounded-bottom { border-radius: 0 0 1.25rem 1.25rem; }
+.bar-rounded-diag-a { border-radius: 1.25rem 0 1.25rem 0; }
+.bar-rounded-diag-b { border-radius: 0 1.25rem 0 1.25rem; }
+.bar-rounded-3 { border-radius: 1.25rem 1.25rem 1.25rem 0; }
+
+/* New asymmetric and organic shapes */
+.wave-left { border-radius: 2rem 0.5rem 2rem 0.5rem; }
+.wave-right { border-radius: 0.5rem 2rem 0.5rem 2rem; }
+.teardrop-up { border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; }
+.teardrop-down { border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; }
+.pebble-a { border-radius: 2rem 0.8rem 1.5rem 0.3rem; }
+.pebble-b { border-radius: 0.3rem 1.5rem 0.8rem 2rem; }
+.leaf-a { border-radius: 0 2rem 0 1rem; }
+.leaf-b { border-radius: 2rem 0 1rem 0; }
+.blob-a { border-radius: 1.5rem 2rem 0.8rem 1.2rem; }
+.blob-b { border-radius: 0.8rem 1.2rem 1.5rem 2rem; }
+.curve-dramatic { border-radius: 3rem 0.2rem 3rem 0.2rem; }
+
+/* Compact circle and drop (for mobile horizontal loop) */
+.shape-circle { border-radius: 9999px; height: 20px; width: 20px; }
+.shape-egg { border-radius: 50% 50% 60% 60% / 55% 55% 45% 45%; height: 20px; width: 16px; }
+
+/* Connected Geometric Composition */
+.hexagon-center {
+  clip-path: polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%);
+  transform: rotate(0deg);
+}
+
+.diamond-left,
+.diamond-right {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  transform: rotate(0deg);
+}
+
+.diamond-left {
+  transform: rotate(-15deg);
+}
+
+.diamond-right {
+  transform: rotate(15deg);
+}
+
+.rect-top,
+.rect-bottom {
+  border-radius: 1rem 1rem 0.5rem 0.5rem;
+}
+
+.rect-bottom {
+  border-radius: 0.5rem 0.5rem 1rem 1rem;
+}
+
+.triangle-tl,
+.triangle-tr,
+.triangle-bl,
+.triangle-br {
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.triangle-tr {
+  transform: rotate(90deg);
+}
+
+.triangle-bl {
+  transform: rotate(270deg);
+}
+
+.triangle-br {
+  transform: rotate(180deg);
+}
+
+.outer-top,
+.outer-bottom {
+  border-radius: 2rem 2rem 0.5rem 0.5rem;
+}
+
+.outer-bottom {
+  border-radius: 0.5rem 0.5rem 2rem 2rem;
+}
+
+.outer-left,
+.outer-right {
+  border-radius: 0.5rem 2rem 2rem 0.5rem;
+}
+
+.outer-right {
+  border-radius: 2rem 0.5rem 0.5rem 2rem;
+}
+
+/* Connected hover effects */
+.hexagon-center:hover {
+  transform: rotate(0deg) scale(1.05);
+  box-shadow: 
+    12px 12px 24px rgba(0, 0, 0, 0.15),
+    -12px -12px 24px rgba(255, 255, 255, 0.8);
+}
+
+.diamond-left:hover {
+  transform: rotate(-15deg) scale(1.1);
+}
+
+.diamond-right:hover {
+  transform: rotate(15deg) scale(1.1);
+}
+
+.rect-top:hover {
+  transform: scale(1.05) translateY(-2px);
+}
+
+.rect-bottom:hover {
+  transform: scale(1.05) translateY(2px);
+}
+
+.triangle-tl:hover {
+  transform: rotate(0deg) scale(1.1);
+}
+
+.triangle-tr:hover {
+  transform: rotate(90deg) scale(1.1);
+}
+
+.triangle-bl:hover {
+  transform: rotate(270deg) scale(1.1);
+}
+
+.triangle-br:hover {
+  transform: rotate(180deg) scale(1.1);
+}
+
+.outer-top:hover,
+.outer-bottom:hover,
+.outer-left:hover,
+.outer-right:hover {
+  transform: scale(1.08);
+}
+
+/* Mobile horizontal loop (above text) - 3 columns seamless */
+.loop-rail-top { 
+  position: relative; 
+  height: 8rem; /* Fixed height for 3 column layout */
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.loop-track-x { 
+  position: relative;
+  height: 100%;
+  overflow: hidden; 
+}
+
+.loop-group-x {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem; /* Small gap between items */
+  width: fit-content;
+  animation: lm-loop-horizontal 15s linear infinite; /* Slower for mobile */
+}
+
+.loop-group-x.dir-left {
+  animation: lm-loop-horizontal 15s linear infinite;
+}
+
+.loop-group-x.dir-right { 
+  animation: lm-loop-horizontal-rev 15s linear infinite; 
+}
+
+.loop-item-x {
+  height: 2rem; /* Consistent height for mobile */
+  width: 6rem; /* Fixed width for horizontal items */
+  border-radius: 0.5rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border: 1px solid rgba(5, 151, 242, 0.1);
+}
+
+@keyframes lm-loop-horizontal {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes lm-loop-horizontal-rev {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* Mobile horizontal loop (full background like desktop) */
+.loop-rail-mobile { 
+  position: absolute; 
+  overflow: hidden;
+  transform: rotate(90deg);
+  transform-origin: center center;
+  width: 100vh; /* Full width edge to edge */
+  height: 100vw; /* Full height edge to edge */
+  left: 50%;
+  top: 15%;
+  margin-left: -50vh; /* Center the rotated element */
+  margin-top: -50vw; /* Center the rotated element */
+}
+
+.loop-rail-mobile .grid {
+  gap: 1rem; /* Increased gap between rows for better visibility */
+}
+
+.loop-track-mobile { 
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.loop-group-mobile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  animation: lm-loop-vertical-mobile 12s linear infinite;
+}
+
+.loop-group-mobile.dir-up {
+  animation: lm-loop-vertical-mobile 12s linear infinite;
+}
+
+.loop-group-mobile.dir-down { 
+  animation: lm-loop-vertical-mobile-rev 12s linear infinite; 
+}
+
+.loop-item-mobile {
+  width: 100%;
+  height: 72px;
+  border: 2px solid rgba(5, 151, 242, 0.15);
+  box-shadow:
+    4px 4px 12px rgba(0,0,0,0.06),
+    -4px -4px 12px rgba(255,255,255,0.7),
+    inset 1px 1px 2px rgba(255,255,255,0.35),
+    inset -1px -1px 2px rgba(0,0,0,0.05);
+}
+
+@media (max-width: 640px) {
+  .loop-item-mobile {
+    height: 60px; /* Slightly smaller for mobile */
+  }
+  
+  .loop-rail-mobile {
+    width: 100vh; /* Full width edge to edge */
+    height: 100vw; /* Full height edge to edge */
+    margin-left: -50vh;
+    margin-top: -50vw;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1023px) {
+  .loop-item-mobile {
+    height: 68px; /* Medium size for tablets */
+  }
+  
+  .loop-rail-mobile {
+    width: 100vh; /* Full width edge to edge */
+    height: 100vw; /* Full height edge to edge */
+    margin-left: -50vh;
+    margin-top: -50vw;
+  }
+}
+
+/* Ensure all mobile loop items have visible backgrounds */
+.loop-item-mobile[class*="bg-gradient"] {
+  background-clip: padding-box !important;
+}
+
+/* Override any potential transparent backgrounds on mobile */
+.loop-item-mobile {
+  background-color: var(--lm-brandBlue) !important; /* Fallback solid color */
+}
+
+/* Specific overrides for gradient classes on mobile */
+.loop-item-mobile.bg-gradient-to-r {
+  background-image: linear-gradient(to right, var(--tw-gradient-stops)) !important;
+}
+
+/* Force specific minimum heights for mobile shapes */
+@media (max-width: 1024px) {
+  .loop-item-mobile {
+    display: block !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+@keyframes lm-loop-vertical-mobile {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes lm-loop-vertical-mobile-rev {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
+}
+
+/* Simple scroll arrow animation */
+@keyframes scroll-bounce {
+  0%, 100% { 
+    transform: translateY(0px);
+    opacity: 1;
+  }
+  50% { 
+    transform: translateY(8px);
+    opacity: 0.7;
+  }
+}
+
+.animate-scroll-bounce {
+  animation: scroll-bounce 2s ease-in-out infinite;
 }
