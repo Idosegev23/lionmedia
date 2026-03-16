@@ -1,269 +1,70 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
-import ContactPopup from './ContactPopup';
+import { motion } from 'framer-motion';
 
 const Hero = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
-  const [isContactPopupOpen, setIsContactPopupOpen] = useState(false);
-
-  useEffect(() => {
-    const tl = gsap.timeline();
-    if (textRef.current?.children) {
-      tl.from(Array.from(textRef.current.children), {
-        duration: 0.8,
-        y: 30,
-        opacity: 0,
-        ease: "power2.out",
-        stagger: 0.1,
-      });
-    }
-  }, []);
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
+  };
 
   return (
-    <section ref={containerRef} className="relative min-h-screen bg-gradient-to-br from-lm-bg via-gray-50 to-white overflow-hidden w-full max-w-full">
-      
-      
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-lm-bg pt-20">
+      {/* Subtle gradient orbs */}
+      <div className="absolute top-1/4 -right-1/4 w-[600px] h-[600px] bg-lm-brand/8 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -left-1/4 w-[400px] h-[400px] bg-lm-lime/8 rounded-full blur-[100px] pointer-events-none" />
 
-      {/* Full-height vertical loop rail on the left (40% width) */}
-      <div className="loop-rail-left absolute inset-y-0 left-0 w-[40%] max-w-[40vw] z-0 pointer-events-none hidden lg:block">
-        <div className="grid grid-cols-3 gap-0 h-full px-0">
-          {/* Column 1 - up */}
-          <div className="relative h-full">
-            <div className="loop-track">
-              <div className="loop-group dir-up">
-                <div className="loop-item pill-a bg-gradient-to-br from-lm-brand to-lm-green/80"></div>
-                <div className="loop-item bar-rounded-tl bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item bar-rounded-diag-a bg-gradient-to-br from-lm-green to-lm-lime/80"></div>
-                <div className="loop-item bar-rounded-3 bg-gradient-to-br from-lm-brand/90 to-lm-light/70"></div>
-                <div className="loop-item pill-d bg-gradient-to-br from-lm-lime/90 to-lm-green/80"></div>
-                <div className="loop-item bar-rounded-bottom bg-gradient-to-br from-white to-lm-light/80"></div>
-                <div className="loop-item bar-rounded-diag-b bg-gradient-to-br from-lm-brand to-lm-green/60"></div>
-                <div className="loop-item pill-b bg-gradient-to-br from-lm-light to-white"></div>
-              </div>
-              <div className="loop-group dir-up">
-                <div className="loop-item pill-a bg-gradient-to-br from-lm-brand to-lm-green/80"></div>
-                <div className="loop-item bar-rounded-tr bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item bar-rounded-diag-b bg-gradient-to-br from-lm-green to-lm-lime/80"></div>
-                <div className="loop-item bar-rounded-3 bg-gradient-to-br from-lm-brand/90 to-lm-light/70"></div>
-                <div className="loop-item pill-d bg-gradient-to-br from-lm-lime/90 to-lm-green/80"></div>
-                <div className="loop-item bar-rounded-bottom bg-gradient-to-br from-white to-lm-light/80"></div>
-                <div className="loop-item bar-rounded-diag-a bg-gradient-to-br from-lm-brand to-lm-green/60"></div>
-                <div className="loop-item pill-b bg-gradient-to-br from-lm-light to-white"></div>
-              </div>
-            </div>
+      <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
+        >
+          <p className="text-sm font-semibold tracking-[0.2em] text-lm-brand mb-8">
+            LION MEDIA
+          </p>
+
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-lm-ink leading-[1.1] mb-8">
+            כל הדיגיטל.
+            <br />
+            <span className="text-lm-brand">בית אחד.</span>
+          </h1>
+
+          <p className="text-lg sm:text-xl text-lm-ink/50 max-w-2xl mx-auto mb-12 leading-relaxed">
+            אתרים, אוטומציות, בוטים חכמים, סושיאל ומערכות מותאמות —
+            <br className="hidden sm:block" />
+            ספק אחד שמחבר את הכל.
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <motion.button
+              onClick={() => scrollTo('contact')}
+              className="bg-lm-ink text-white px-10 py-4 rounded-full text-lg font-bold hover:bg-lm-ink/85 transition-all duration-200"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              בואו נדבר
+            </motion.button>
+            <button
+              onClick={() => scrollTo('services')}
+              className="text-lm-ink/50 hover:text-lm-ink text-lg font-medium transition-colors duration-200"
+            >
+              מה אנחנו עושים
+            </button>
           </div>
-          {/* Column 2 - down */}
-          <div className="relative h-full">
-            <div className="loop-track">
-              <div className="loop-group dir-down">
-                <div className="loop-item bar-rounded-tr bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item pill-a bg-gradient-to-br from-lm-brand to-lm-green/80"></div>
-                <div className="loop-item bar-rounded-diag-a bg-gradient-to-br from-lm-brand/90 to-lm-light/70"></div>
-                <div className="loop-item bar-rounded-3 bg-gradient-to-br from-lm-green to-lm-lime/80"></div>
-                <div className="loop-item pill-b bg-gradient-to-br from-white to-lm-light/80"></div>
-                <div className="loop-item bar-rounded-bottom bg-gradient-to-br from-lm-lime/90 to-lm-green/80"></div>
-                <div className="loop-item pill-d bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item bar-rounded-diag-b bg-gradient-to-br from-lm-brand to-lm-green/60"></div>
-              </div>
-              <div className="loop-group dir-down">
-                <div className="loop-item bar-rounded-tl bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item pill-a bg-gradient-to-br from-lm-brand to-lm-green/80"></div>
-                <div className="loop-item bar-rounded-diag-b bg-gradient-to-br from-lm-brand/90 to-lm-light/70"></div>
-                <div className="loop-item bar-rounded-3 bg-gradient-to-br from-lm-green to-lm-lime/80"></div>
-                <div className="loop-item pill-b bg-gradient-to-br from-white to-lm-light/80"></div>
-                <div className="loop-item bar-rounded-bottom bg-gradient-to-br from-lm-lime/90 to-lm-green/80"></div>
-                <div className="loop-item pill-d bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item bar-rounded-diag-a bg-gradient-to-br from-lm-brand to-lm-green/60"></div>
-              </div>
-            </div>
-          </div>
-          {/* Column 3 - up */}
-          <div className="relative h-full">
-            <div className="loop-track">
-              <div className="loop-group dir-up">
-                <div className="loop-item bar-rounded-diag-a bg-gradient-to-br from-lm-green to-lm-lime/80"></div>
-                <div className="loop-item bar-rounded-3 bg-gradient-to-br from-lm-brand/90 to-lm-light/70"></div>
-                <div className="loop-item pill-a bg-gradient-to-br from-lm-brand to-lm-green/80"></div>
-                <div className="loop-item bar-rounded-tr bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item bar-rounded-diag-b bg-gradient-to-br from-lm-brand to-lm-green/60"></div>
-                <div className="loop-item pill-d bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item bar-rounded-bottom bg-gradient-to-br from-lm-lime/90 to-lm-green/80"></div>
-                <div className="loop-item pill-b bg-gradient-to-br from-white to-lm-light/80"></div>
-              </div>
-              <div className="loop-group dir-up">
-                <div className="loop-item bar-rounded-diag-b bg-gradient-to-br from-lm-green to-lm-lime/80"></div>
-                <div className="loop-item bar-rounded-3 bg-gradient-to-br from-lm-brand/90 to-lm-light/70"></div>
-                <div className="loop-item pill-a bg-gradient-to-br from-lm-brand to-lm-green/80"></div>
-                <div className="loop-item bar-rounded-tl bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item bar-rounded-diag-a bg-gradient-to-br from-lm-brand to-lm-green/60"></div>
-                <div className="loop-item pill-d bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item bar-rounded-bottom bg-gradient-to-br from-lm-lime/90 to-lm-green/80"></div>
-                <div className="loop-item pill-b bg-gradient-to-br from-white to-lm-light/80"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+        </motion.div>
       </div>
 
-      {/* Mobile-only horizontal loop background - copy desktop structure exactly */}
-      <div className="block lg:hidden loop-rail-mobile absolute inset-x-0 top-0 h-[15%] z-0 pointer-events-none">
-        <div className="grid grid-cols-3 gap-0 h-full px-0">
-          {/* Column 1 - up */}
-          <div className="relative h-full">
-            <div className="loop-track-mobile">
-              <div className="loop-group-mobile dir-up">
-                <div className="loop-item-mobile wave-left bg-gradient-to-br from-lm-brand to-lm-green/80"></div>
-                <div className="loop-item-mobile teardrop-up bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item-mobile pebble-a bg-gradient-to-br from-lm-green to-lm-lime/80"></div>
-                <div className="loop-item-mobile leaf-a bg-gradient-to-br from-lm-brand/90 to-lm-light/70"></div>
-                <div className="loop-item-mobile blob-a bg-gradient-to-br from-lm-lime/90 to-lm-green/80"></div>
-                <div className="loop-item-mobile curve-dramatic bg-gradient-to-br from-white to-lm-light/80"></div>
-                <div className="loop-item-mobile wave-right bg-gradient-to-br from-lm-brand to-lm-green/60"></div>
-                <div className="loop-item-mobile teardrop-down bg-gradient-to-br from-lm-light to-white"></div>
-              </div>
-              <div className="loop-group-mobile dir-up">
-                <div className="loop-item-mobile pebble-b bg-gradient-to-br from-lm-brand to-lm-green/80"></div>
-                <div className="loop-item-mobile leaf-b bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item-mobile blob-b bg-gradient-to-br from-lm-green to-lm-lime/80"></div>
-                <div className="loop-item-mobile pill-c bg-gradient-to-br from-lm-brand/90 to-lm-light/70"></div>
-                <div className="loop-item-mobile wave-left bg-gradient-to-br from-lm-lime/90 to-lm-green/80"></div>
-                <div className="loop-item-mobile teardrop-up bg-gradient-to-br from-white to-lm-light/80"></div>
-                <div className="loop-item-mobile curve-dramatic bg-gradient-to-br from-lm-brand to-lm-green/60"></div>
-                <div className="loop-item-mobile pebble-a bg-gradient-to-br from-lm-light to-white"></div>
-              </div>
-            </div>
-          </div>
-          {/* Column 2 - down */}
-          <div className="relative h-full">
-            <div className="loop-track-mobile">
-              <div className="loop-group-mobile dir-down">
-                <div className="loop-item-mobile bar-rounded-tr bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item-mobile pill-a bg-gradient-to-br from-lm-brand to-lm-green/80"></div>
-                <div className="loop-item-mobile bar-rounded-diag-a bg-gradient-to-br from-lm-brand/90 to-lm-light/70"></div>
-                <div className="loop-item-mobile bar-rounded-3 bg-gradient-to-br from-lm-green to-lm-lime/80"></div>
-                <div className="loop-item-mobile pill-b bg-gradient-to-br from-white to-lm-light/80"></div>
-                <div className="loop-item-mobile bar-rounded-bottom bg-gradient-to-br from-lm-lime/90 to-lm-green/80"></div>
-                <div className="loop-item-mobile pill-d bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item-mobile bar-rounded-diag-b bg-gradient-to-br from-lm-brand to-lm-green/60"></div>
-              </div>
-              <div className="loop-group-mobile dir-down">
-                <div className="loop-item-mobile bar-rounded-tl bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item-mobile pill-a bg-gradient-to-br from-lm-brand to-lm-green/80"></div>
-                <div className="loop-item-mobile bar-rounded-diag-b bg-gradient-to-br from-lm-brand/90 to-lm-light/70"></div>
-                <div className="loop-item-mobile bar-rounded-3 bg-gradient-to-br from-lm-green to-lm-lime/80"></div>
-                <div className="loop-item-mobile pill-b bg-gradient-to-br from-white to-lm-light/80"></div>
-                <div className="loop-item-mobile bar-rounded-bottom bg-gradient-to-br from-lm-lime/90 to-lm-green/80"></div>
-                <div className="loop-item-mobile pill-d bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item-mobile bar-rounded-diag-a bg-gradient-to-br from-lm-brand to-lm-green/60"></div>
-              </div>
-            </div>
-          </div>
-          {/* Column 3 - up */}
-          <div className="relative h-full">
-            <div className="loop-track-mobile">
-              <div className="loop-group-mobile dir-up">
-                <div className="loop-item-mobile bar-rounded-diag-a bg-gradient-to-br from-lm-green to-lm-lime/80"></div>
-                <div className="loop-item-mobile bar-rounded-3 bg-gradient-to-br from-lm-brand/90 to-lm-light/70"></div>
-                <div className="loop-item-mobile pill-a bg-gradient-to-br from-lm-brand to-lm-green/80"></div>
-                <div className="loop-item-mobile bar-rounded-tr bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item-mobile bar-rounded-diag-b bg-gradient-to-br from-lm-brand to-lm-green/60"></div>
-                <div className="loop-item-mobile pill-d bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item-mobile bar-rounded-bottom bg-gradient-to-br from-lm-lime/90 to-lm-green/80"></div>
-                <div className="loop-item-mobile pill-b bg-gradient-to-br from-white to-lm-light/80"></div>
-              </div>
-              <div className="loop-group-mobile dir-up">
-                <div className="loop-item-mobile bar-rounded-diag-b bg-gradient-to-br from-lm-green to-lm-lime/80"></div>
-                <div className="loop-item-mobile bar-rounded-3 bg-gradient-to-br from-lm-brand/90 to-lm-light/70"></div>
-                <div className="loop-item-mobile pill-a bg-gradient-to-br from-lm-brand to-lm-green/80"></div>
-                <div className="loop-item-mobile bar-rounded-tl bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item-mobile bar-rounded-diag-a bg-gradient-to-br from-lm-brand to-lm-green/60"></div>
-                <div className="loop-item-mobile pill-d bg-gradient-to-br from-lm-light to-white"></div>
-                <div className="loop-item-mobile bar-rounded-bottom bg-gradient-to-br from-lm-lime/90 to-lm-green/80"></div>
-                <div className="loop-item-mobile pill-b bg-gradient-to-br from-white to-lm-light/80"></div>
-              </div>
-            </div>
-          </div>
+      {/* Scroll indicator */}
+      <motion.div
+        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        animate={{ y: [0, 8, 0] }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        <div className="w-6 h-10 border-2 border-lm-ink/15 rounded-full flex justify-center pt-2">
+          <div className="w-1 h-2 bg-lm-ink/30 rounded-full" />
         </div>
-      </div>
-
-      {/* Main Content Container */}
-      <div className="relative z-10 min-h-screen flex items-center pt-[50%] lg:pt-0">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-12 max-w-full">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            
-            {/* Left Side - Content */}
-            <div ref={textRef} className="text-center lg:text-right order-2 lg:order-1">
-
-
-              {/* Main Heading */}
-              <div className="space-y-6 lg:space-y-8">
-                <h1 className="text-5xl sm:text-6xl lg:text-6xl xl:text-7xl font-bold leading-tight">
-                  <span className="block text-lm-ink mb-2">יוצרים</span>
-                  <span className="block bg-gradient-to-l from-lm-brand via-lm-green to-lm-brand bg-clip-text text-transparent">
-                    מציאות דיגיטלית
-                  </span>
-                </h1>
-
-                <p className="text-xl sm:text-2xl lg:text-2xl text-lm-ink/80 leading-relaxed mx-auto lg:mx-0 max-w-2xl">
-                  החלומות שלכם - הדיגיטל שלנו
-                </p>
-
-                <p className="text-lg sm:text-xl lg:text-xl text-lm-ink/60 leading-relaxed mx-auto lg:mx-0 max-w-xl">
-                  פחות ספקים, יותר סדר. הכל במקום אחד.
-                </p>
-              </div>
-
-              {/* CTA Section */}
-              <div className="flex flex-col items-center lg:items-start gap-6 mt-10 lg:mt-12">
-                {/* Main CTA Button */}
-                <button
-                  onClick={() => setIsContactPopupOpen(true)}
-                  className="group asymmetric-button-primary px-10 lg:px-12 py-5 lg:py-6 text-xl lg:text-2xl font-bold text-white transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
-                >
-                  <span className="flex items-center justify-center gap-3">
-                    בואו נתחיל
-                    <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                  </span>
-                </button>
-
-
-              </div>
-            </div>
-
-            {/* Right column removed – loop rail overlays the section */}
-          </div>
-        </div>
-      </div>
-
-      {/* Scroll Indicator - Simple Arrow */}
-      <div className="absolute bottom-16 lg:bottom-20 left-1/2 transform -translate-x-1/2 z-20 cursor-pointer group">
-        <div className="animate-scroll-bounce">
-          <svg 
-            className="w-8 h-8 text-lm-brand group-hover:text-lm-green transition-colors duration-300" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              strokeWidth={2.5} 
-              d="M19 14l-7 7m0 0l-7-7m7 7V3" 
-            />
-          </svg>
-        </div>
-      </div>
-
-      {/* Contact Popup */}
-      <ContactPopup 
-        isOpen={isContactPopupOpen} 
-        onClose={() => setIsContactPopupOpen(false)} 
-      />
+      </motion.div>
     </section>
   );
 };

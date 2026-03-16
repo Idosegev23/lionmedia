@@ -5,46 +5,35 @@ import { useState } from 'react';
 import ContactPopup from './ContactPopup';
 
 const CTABand = () => {
-  const [isContactPopupOpen, setIsContactPopupOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <section id="contact" className="py-16 lg:py-20 bg-lm-brand">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div 
-          className="text-center"
-          initial={{ opacity: 0, y: 20 }}
+    <section id="contact" className="py-24 lg:py-32 bg-white">
+      <div className="mx-auto max-w-4xl px-6 lg:px-8 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-            החלום שלכם. הדיגיטל שלנו.
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-lm-ink mb-6">
+            מוכנים להתחיל?
           </h2>
-          <p className="mt-6 text-xl text-white/90 max-w-2xl mx-auto">
-            ספק אחד, מערכת אחת, תוצאה ברורה.
+          <p className="text-lg text-lm-ink/40 mb-10 max-w-xl mx-auto">
+            ספרו לנו על העסק שלכם ונחזור עם תוכנית פעולה ברורה.
           </p>
-          <motion.div 
-            className="mt-10"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
+          <motion.button
+            onClick={() => setIsOpen(true)}
+            className="bg-lm-ink text-white px-12 py-4 rounded-full text-lg font-bold hover:bg-lm-ink/85 transition-all duration-200"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
-            <button
-              onClick={() => setIsContactPopupOpen(true)}
-              className="inline-flex items-center rounded-xl bg-white px-8 py-4 text-lg font-semibold text-lm-brand hover:bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-lm-brand shadow-lg hover:shadow-xl"
-            >
-              דברו איתנו עכשיו
-            </button>
-          </motion.div>
+            בואו נדבר
+          </motion.button>
         </motion.div>
       </div>
 
-      {/* Contact Popup */}
-      <ContactPopup 
-        isOpen={isContactPopupOpen} 
-        onClose={() => setIsContactPopupOpen(false)} 
-      />
+      <ContactPopup isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </section>
   );
 };
